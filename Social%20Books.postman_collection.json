@@ -1,0 +1,122 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Social Books",
+		"_postman_id": "17fd6bbe-4c04-7a90-3d8f-8815073574d4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cria autor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Successful POST request\"] = responseCode.code === 201;\n\n\npostman.setGlobalVariable(\"localizacao\", postman.getResponseHeader(\"Location\"));"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/autores",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWxnYXdvcmtzOnNlbmhh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Caio Silva\",\n\t\"dataNascimento\":\"10/10/1910\",\n\t\"nacionalidade\":\"Brasileira\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Busca autor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Body matches string\"] = responseBody.has(\"Caio Silva\");"
+					}
+				}
+			],
+			"request": {
+				"url": "{{localizacao}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Caio Silva\",\n\t\"dataNascimento\":\"10/10/1910\",\n\t\"nacionalidade\":\"Brasileira\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Busca livro inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Status code is 404\"] = responseCode.code === 404;"
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/livros/123",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cria livro",
+			"request": {
+				"url": "http://localhost:8080/livros",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWxnYXdvcmtzOnNlbmhh",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Git passo a passo\",\n\t\"publicacao\":\"10/10/2010\",\n\t\"resumo\":\"Livro detalhado sobre REST\",\n\t\"editora\":\"SilvaNasc\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
